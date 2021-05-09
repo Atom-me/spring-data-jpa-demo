@@ -4,8 +4,10 @@ import com.atom.springdatajpa.entity.Customer;
 import com.atom.springdatajpa.repository.CustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 
 /**
  * jqpl查询：
@@ -59,8 +61,10 @@ public class JpaJpqlTest1 {
      * test delete by id
      */
     @Test
+    @Transactional//default Rolled back transaction for test
+    @Rollback(value = false)
     public void testDelete() {
-        customerRepository.deleteCustomerById(3l);
+        customerRepository.deleteCustomerById(6l);
     }
 
 

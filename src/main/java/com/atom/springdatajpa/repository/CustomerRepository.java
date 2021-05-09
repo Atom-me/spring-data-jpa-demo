@@ -64,7 +64,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>, JpaSp
      * @param id
      */
     @Modifying
-    @Transactional
     @Query(value = "delete from Customer where custId=?1")
     void deleteCustomerById(Long id);
 
