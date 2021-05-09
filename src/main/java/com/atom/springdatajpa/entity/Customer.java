@@ -18,6 +18,10 @@ public class Customer {
     private Long custId;
     @Column(name = "cust_address")
     private String custAddress;
+
+    /**
+     * 客户所属行业
+     */
     @Column(name = "cust_industry")
     private String custIndustry;
     @Column(name = "cust_level")
