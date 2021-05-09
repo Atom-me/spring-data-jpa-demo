@@ -71,7 +71,7 @@ public class JpaSpecificationExecutorTest1 {
      * 使用动态查询，根据条件，查询单个对象
      */
     @Test
-    public void testSpecification() {
+    public void testSpecification1() {
         /**
          * 匿名内部类
          *
@@ -82,16 +82,12 @@ public class JpaSpecificationExecutorTest1 {
          *      root: 获取需要查询的对象的属性，是属性名称，不是字段名称
          *      CriteriaBuilder：构造查询条件的，内部封装了很多的查询条件（模糊匹配，精准匹配）
          *
-         *  案例：根据客户名称和所属行业查询，查询客户名称为 atom ，并且 属于教育行业 的客户
+         *  案例：根据客户名称查询，查询客户名称为 atom 的客户
          *      查询条件：
-         *          1。比较属性名称
-         *               从root对象获取
-         *               客户名称
-         *               所属行业
-         *
-         *          2。查询方式
+         *          1。查询方式
          *              通过criteriaBuilder对象构建
-         *              criteriaBuilder 组合多个查询条件
+         *          2。比较属性名称
+         *              从root对象获取
          */
 
         Optional<Customer> one = customerRepository.findOne(new Specification<Customer>() {
@@ -99,18 +95,11 @@ public class JpaSpecificationExecutorTest1 {
             public Predicate toPredicate(Root<Customer> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 //获取比较的属性
                 Path<Object> custName = root.get("custName");//是属性名称，不是字段名称
-                Path<Object> custIndustry = root.get("custIndustry");//所属行业
-
 
                 //构造查询条件，精准匹配使用，equal方法
-                Predicate predicate = criteriaBuilder.equal(custName, "atom");//要比较的属性，和比较属性的值
-                Predicate predicate1 = criteriaBuilder.equal(custIndustry, "教育");//所属行业
+                Predicate predicate = criteriaBuilder.equal(custName, "atomadeae9aa-b407-4f54-856d-1b359cdbe6f9");//要比较的属性，和比较属性的值
 
-                //将多个查询条件组合到一起
-                // (满足条件一并且满足条件二：与关系) criteriaBuilder.and
-                // (满足条件一或者满足条件二：或关系) criteriaBuilder.or()
-                Predicate and = criteriaBuilder.and(predicate, predicate1);
-                return and;
+                return predicate;
             }
         });
 
