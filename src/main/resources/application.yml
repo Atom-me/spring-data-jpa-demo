@@ -1,0 +1,13 @@
+
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/jpa-demo
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+server:
+  port: 8080
