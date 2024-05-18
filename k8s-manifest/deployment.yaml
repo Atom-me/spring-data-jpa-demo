@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-data-jpa-demo
+  labels:
+    app: spring-data-jps-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-data-jpa-demo
+  template:
+    metadata:
+      name: spring-data-jpa-demo
+      labels:
+        app: spring-data-jpa-demo
+    spec:
+      containers:
+        - name: spring-data-jpa-demo
+          image: spring-data-jpa-demo:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: spring-data-jpa-demo-datasource-credentials
+                  key: spring.datasource.url
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: spring-data-jpa-demo-datasource-credentials
+                  key: spring.datasource.username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: spring-data-jpa-demo-datasource-credentials
+                  key: spring.datasource.password
+          volumeMounts:
+            - name: demo-configmap
+              mountPath: /app/config/
+      volumes:
+        - name: demo-configmap
+          configMap:
+            name: spring-data-jpa-demo-configmap
+      restartPolicy: Always
+      
